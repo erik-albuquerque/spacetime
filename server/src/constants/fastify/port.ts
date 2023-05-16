@@ -1,3 +1,3 @@
-const PORT = 3333;
+const PORT = 3333
 
-export { PORT };
+export { PORT }

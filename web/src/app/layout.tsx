@@ -1,7 +1,8 @@
-import '../styles/globals.css'
+import '@/common/styles/globals.css'
 
 import { ReactNode } from 'react'
-import { roboto, baiJamjuree } from '@/fonts'
+import { roboto, baiJamjuree } from '@/common/fonts'
+import { cn } from '@/common/utils'
 
 export const metadata = {
   title: 'Spacetime',
@@ -13,7 +14,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${baiJamjuree.variable} bg-gray-900 font-sans text-gray-100`}
+        className={cn(
+          'font-sans',
+          'bg-gray-900 text-gray-100',
+          roboto.variable,
+          baiJamjuree.variable,
+        )}
       >
         {children}
       </body>

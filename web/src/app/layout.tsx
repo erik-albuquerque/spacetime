@@ -1,5 +1,7 @@
-import { ReactNode } from 'react'
 import '../styles/globals.css'
+
+import { ReactNode } from 'react'
+import { roboto, baiJamjuree } from '@/fonts'
 
 export const metadata = {
   title: 'Create Next App',
@@ -8,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={`${roboto.variable} ${baiJamjuree.variable} font-sans`}>
+        {children}
+      </body>
     </html>
   )
 }

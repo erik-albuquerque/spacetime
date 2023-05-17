@@ -4,7 +4,9 @@ import { ReactNode } from 'react'
 import { roboto, baiJamjuree } from '@/fonts'
 
 export const metadata = {
-  title: 'Create Next App',
+  title: 'Spacetime',
+  description:
+    'Uma cápsula do tempo construída com React, Next.js, TailwindCSS e TypeScript',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

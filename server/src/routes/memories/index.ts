@@ -7,7 +7,7 @@ import { createNewMemory } from './create-new-memory'
 import { updateMemory } from './update-memory'
 import { deleteMemory } from './delete-memory'
 
-const routes = (
+const routes = async (
   app: FastifyInstance,
   opts: FastifyPluginOptions,
   next: (err?: Error | undefined) => void,
@@ -33,6 +33,6 @@ const routes = (
   next()
 }
 
-const memoriesRoutes = fp(routes, {})
+const memoriesRoutes = fp(routes)
 
 export { memoriesRoutes }

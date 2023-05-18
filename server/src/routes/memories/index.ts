@@ -12,25 +12,40 @@ const routes = async (
   opts: FastifyPluginOptions,
   next: (err?: Error | undefined) => void,
 ) => {
-  app.addHook('preHandler', async (request) => await request.jwtVerify())
+  app.route({
+    method: 'GET',
+    url: '/memories',
+    preHandler: async (request) => await request.jwtVerify(),
+    handler: async (request, reply) => getAllMemories(request, reply),
+  })
 
-  app.get('/memories', async (request, reply) => getAllMemories(request, reply))
+  app.route({
+    method: 'GET',
+    url: '/memories/:id',
+    preHandler: async (request) => await request.jwtVerify(),
+    handler: async (request, reply) => getMemoryById(request, reply),
+  })
 
-  app.get('/memories/:id', async (request, reply) =>
-    getMemoryById(request, reply),
-  )
+  app.route({
+    method: 'POST',
+    url: '/memories',
+    preHandler: async (request) => await request.jwtVerify(),
+    handler: async (request, reply) => createNewMemory(request, reply),
+  })
 
-  app.post('/memories', async (request, reply) =>
-    createNewMemory(request, reply),
-  )
+  app.route({
+    method: 'PUT',
+    url: '/memories/:id',
+    preHandler: async (request) => await request.jwtVerify(),
+    handler: async (request, reply) => updateMemory(request, reply),
+  })
 
-  app.put('/memories/:id', async (request, reply) =>
-    updateMemory(request, reply),
-  )
-
-  app.delete('/memories/:id', async (request, reply) =>
-    deleteMemory(request, reply),
-  )
+  app.route({
+    method: 'DELETE',
+    url: '/memories/:id',
+    preHandler: async (request) => await request.jwtVerify(),
+    handler: async (request, reply) => deleteMemory(request, reply),
+  })
 
   next()
 }

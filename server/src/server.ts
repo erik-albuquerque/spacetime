@@ -1,12 +1,10 @@
-import { APP, PORT } from './constants/fastify'
-import { prisma } from './lib'
+import { app, initServer } from './constants/fastify'
+import { memoriesRoutes } from './routes'
 
-APP.get('/', async () => {
-  const users = await prisma.user.findMany()
+const bootstrap = async () => {
+  await app.register(memoriesRoutes)
 
-  return users
-})
+  await initServer()
+}
 
-APP.listen({
-  port: PORT,
-}).then(() => console.log(`HTTP Server Running on http://localhost:${PORT}`))
+bootstrap()

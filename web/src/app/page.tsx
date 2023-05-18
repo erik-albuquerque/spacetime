@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { User } from 'lucide-react'
+import { GET_GITHUB_CODE_LINK } from '@/common/constants'
 
 import nlwSpacetimeLogo from '@/common/assets/nlw-spacetime-logo.svg'
 
@@ -15,7 +16,10 @@ const Home = () => {
         <div className="absolute bottom-0 right-2 top-0 w-2 bg-stripes" />
 
         {/* Section Profile - Sign in */}
-        <a href="" className="flex items-center gap-3 text-left">
+        <a
+          href={GET_GITHUB_CODE_LINK}
+          className="flex items-center gap-3 text-left"
+        >
           {/* Section Avatar */}
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400">
             <User className="h-5 w-5 text-gray-500" />

@@ -12,6 +12,8 @@ const createNewMemory = async (
     isPublic: z.coerce.boolean().default(false),
   })
 
+  const user = request.user
+
   try {
     const { content, coverUrl, isPublic } = bodySchema.parse(request.body)
 
@@ -20,7 +22,7 @@ const createNewMemory = async (
         content,
         coverUrl,
         isPublic,
-        userId: '83d67a61-9d89-4a1d-ba58-af030e04ae1a',
+        userId: user.sub,
       },
     })
 

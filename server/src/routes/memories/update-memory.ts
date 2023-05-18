@@ -3,28 +3,30 @@ import { z } from 'zod'
 import { prisma } from '../../lib'
 
 const updateMemory = async (request: FastifyRequest, reply: FastifyReply) => {
+  const paramsSchema = z.object({
+    id: z.string().uuid(),
+  })
+
+  const bodySchema = z.object({
+    content: z.string(),
+    coverUrl: z.string(),
+    isPublic: z.coerce.boolean().default(false),
+  })
+
+  const user = request.user
+
   try {
-    const paramsSchema = z.object({
-      id: z.string().uuid(),
-    })
-
-    const bodySchema = z.object({
-      content: z.string(),
-      coverUrl: z.string(),
-      isPublic: z.coerce.boolean().default(false),
-    })
-
     const { id } = paramsSchema.parse(request.params)
 
     const { content, coverUrl, isPublic } = bodySchema.parse(request.body)
 
-    const findMemory = await prisma.memory.findUnique({
+    let memory = await prisma.memory.findUnique({
       where: {
         id,
       },
     })
 
-    if (!findMemory) {
+    if (!memory) {
       return reply.status(400).send({
         code: 400,
         status: 'Bad Request',
@@ -32,12 +34,16 @@ const updateMemory = async (request: FastifyRequest, reply: FastifyReply) => {
       })
     }
 
-    const memory = await prisma.memory.update({
+    if (memory.userId !== user.sub) {
+      return reply.status(401).send()
+    }
+
+    memory = await prisma.memory.update({
       data: {
         content,
         coverUrl,
         isPublic,
-        userId: '83d67a61-9d89-4a1d-ba58-af030e04ae1a',
+        userId: user.sub,
       },
       where: {
         id,

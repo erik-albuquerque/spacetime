@@ -12,6 +12,8 @@ const routes = async (
   opts: FastifyPluginOptions,
   next: (err?: Error | undefined) => void,
 ) => {
+  app.addHook('preHandler', async (request) => await request.jwtVerify())
+
   app.get('/memories', async (request, reply) => getAllMemories(request, reply))
 
   app.get('/memories/:id', async (request, reply) =>

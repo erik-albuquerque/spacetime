@@ -7,6 +7,8 @@ const getMemoryById = async (request: FastifyRequest, reply: FastifyReply) => {
     id: z.string().uuid(),
   })
 
+  const user = request.user
+
   try {
     const { id } = paramsSchema.parse(request.params)
 
@@ -22,6 +24,10 @@ const getMemoryById = async (request: FastifyRequest, reply: FastifyReply) => {
         status: 'Bad Request',
         message: 'Memory not found!',
       })
+    }
+
+    if (!memory.isPublic && memory.userId !== user.sub) {
+      return reply.status(401).send()
     }
 
     return reply.status(200).send({ memory })

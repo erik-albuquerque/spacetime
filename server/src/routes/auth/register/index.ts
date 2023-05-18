@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 import axios from 'axios'
 
 import {
@@ -9,7 +9,11 @@ import {
 import { registerSchema, userSchema } from './schemas'
 import { prisma } from '../../../lib'
 
-const register = async (request: FastifyRequest, reply: FastifyReply) => {
+const register = async (
+  app: FastifyInstance,
+  request: FastifyRequest,
+  reply: FastifyReply,
+) => {
   try {
     const { code } = registerSchema.parse(request.body)
 
@@ -57,7 +61,18 @@ const register = async (request: FastifyRequest, reply: FastifyReply) => {
       })
     }
 
-    return reply.status(201).send({ user })
+    const token = app.jwt.sign(
+      {
+        name: user.name,
+        avatarUrl: user.avatarUrl,
+      },
+      {
+        sub: user.id,
+        expiresIn: '30 days',
+      },
+    )
+
+    return reply.status(200).send({ token })
   } catch (error) {
     console.log(error)
 

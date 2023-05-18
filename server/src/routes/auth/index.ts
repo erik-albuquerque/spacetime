@@ -9,7 +9,7 @@ const routes = async (
 ) => {
   app.post(
     '/register',
-    async (request, reply) => await register(request, reply),
+    async (request, reply) => await register(app, request, reply),
   )
 
   next()

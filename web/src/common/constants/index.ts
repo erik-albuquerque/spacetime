@@ -1,1 +1,1 @@
-export * from './get-github-code-link'
+export * from './github-sign-in-url'

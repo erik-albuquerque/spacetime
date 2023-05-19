@@ -1,19 +1,12 @@
-import { StatusBar } from 'expo-status-bar'
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
-import { styled } from 'nativewind'
+import { Text, TouchableOpacity, View } from 'react-native'
 import * as SecureStore from 'expo-secure-store'
 import { useRouter } from 'expo-router'
 
-import { useFonts } from '../src/hooks'
-
 import NLWLogo from '../src/common/assets/nlw-spacetime-logo.svg'
-import blurBg from '../src/common/assets/bg-blur.png'
 
-import StripesComponent from '../src/common/assets/stripes.svg'
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import { useEffect } from 'react'
 import { api } from '../src/lib'
-const Stripes = styled(StripesComponent)
 
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
@@ -24,8 +17,6 @@ const discovery = {
 
 export default function App() {
   const router = useRouter()
-
-  const { hasLoadedFonts, errors } = useFonts()
 
   const [, response, signInWithGithub] = useAuthRequest(
     {
@@ -39,13 +30,17 @@ export default function App() {
   )
 
   const handleGithubOAuthCode = async (code: string) => {
-    const response = await api.post('/register', { code })
+    try {
+      const response = await api.post('/register', { code })
 
-    const { token } = response.data
+      const { token } = response.data
 
-    await SecureStore.setItemAsync('token', token)
+      await SecureStore.setItemAsync('token', token)
 
-    router.push('/memories')
+      router.push('/memories')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(() => {
@@ -56,25 +51,8 @@ export default function App() {
     }
   }, [response])
 
-  if (errors) {
-    return <Text>{errors.message}</Text>
-  }
-
-  if (!hasLoadedFonts) {
-    return null
-  }
-
   return (
-    <ImageBackground
-      source={blurBg}
-      className="relative flex-1 items-center justify-center bg-gray-900 px-8 py-10"
-      imageStyle={{
-        position: 'absolute',
-        left: '-100%',
-      }}
-    >
-      <Stripes className="absolute left-2" />
-
+    <View className=" flex-1 items-center justify-center px-8 py-10">
       <View className="flex-1 items-center justify-center gap-6">
         <NLWLogo />
 
@@ -102,8 +80,6 @@ export default function App() {
       <Text className="text-center font-body text-sm leading-relaxed text-gray-200">
         Feito com 💜 no NLW da Rocketseat
       </Text>
-
-      <StatusBar style="light" translucent />
-    </ImageBackground>
+    </View>
   )
 }

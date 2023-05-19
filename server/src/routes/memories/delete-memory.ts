@@ -3,25 +3,31 @@ import { z } from 'zod'
 import { prisma } from '../../lib'
 
 const deleteMemory = async (request: FastifyRequest, reply: FastifyReply) => {
-  try {
-    const paramsSchema = z.object({
-      id: z.string().uuid(),
-    })
+  const paramsSchema = z.object({
+    id: z.string().uuid(),
+  })
 
+  const user = request.user
+
+  try {
     const { id } = paramsSchema.parse(request.params)
 
-    const findMemory = await prisma.memory.findUnique({
+    const memory = await prisma.memory.findUnique({
       where: {
         id,
       },
     })
 
-    if (!findMemory) {
+    if (!memory) {
       return reply.status(400).send({
         code: 400,
         status: 'Bad Request',
         message: 'Memory not found!',
       })
+    }
+
+    if (memory.userId !== user.sub) {
+      return reply.status(401).send()
     }
 
     await prisma.memory.delete({

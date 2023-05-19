@@ -2,8 +2,13 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { prisma } from '../../lib'
 
 const getAllMemories = async (request: FastifyRequest, reply: FastifyReply) => {
+  const user = request.user
+
   try {
     const memoriesResults = await prisma.memory.findMany({
+      where: {
+        userId: user.sub,
+      },
       orderBy: {
         createdAt: 'asc',
       },

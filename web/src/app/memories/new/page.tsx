@@ -1,5 +1,57 @@
+import { Image as IconImage, ChevronLeft } from 'lucide-react'
+import Link from 'next/link'
+
 const NewMemories = () => {
-  return <span>new</span>
+  return (
+    <div className="flex flex-1 flex-col gap-4">
+      <Link
+        href="/"
+        className="flex items-center gap-1 text-sm text-gray-200 hover:text-gray-100"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        voltar à timeline
+      </Link>
+
+      <form className="flex flex-1 flex-col gap-2">
+        <div className="flex items-center gap-4">
+          <div>
+            <label
+              htmlFor="media"
+              className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-200 hover:text-gray-100"
+            >
+              <IconImage className="h-4 w-4" />
+              Anexar mídia
+            </label>
+            <input type="file" id="media" hidden className="invisible" />
+          </div>
+
+          <div className="flex flex-row items-center gap-2">
+            <input
+              type="checkbox"
+              id="isPublic"
+              className="h-4 w-4 rounded border-gray-400 bg-gray-700 text-purple-500"
+            />
+
+            <label
+              htmlFor="isPublic"
+              className="flex cursor-pointer items-center gap-1.5 text-sm text-gray-200 hover:text-gray-100"
+            >
+              Tornar memória pública
+            </label>
+          </div>
+        </div>
+
+        <textarea
+          id="content"
+          name="content"
+          spellCheck={false}
+          className="flex-1 resize-none rounded border-0 bg-transparent p-0 text-lg leading-relaxed text-gray-100 placeholder:text-gray-400 focus:ring-0"
+          placeholder="Fique livre para adicionar fotos, vídeos e relatos sobre essa
+          experiência que você quer lembrar para sempre."
+        />
+      </form>
+    </div>
+  )
 }
 
 export default NewMemories

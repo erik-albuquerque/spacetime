@@ -51,7 +51,7 @@ const Layout = () => {
         }}
       >
         <Stack.Screen name="index" redirect={isAuthenticated} />
-
+        <Stack.Screen name="new" />
         <Stack.Screen name="memories" />
       </Stack>
 

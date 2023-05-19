@@ -5,11 +5,12 @@ import { roboto, baiJamjuree } from '@/common/fonts'
 import { cn } from '@/common/utils'
 
 import { User } from 'lucide-react'
-import { GET_GITHUB_CODE_LINK } from '@/common/constants'
+import { GITHUB_SIGN_IN_URL } from '@/common/constants'
 
 import nlwSpacetimeLogo from '@/common/assets/nlw-spacetime-logo.svg'
 
-import { useUser } from '@/hooks'
+import { useAuth } from '@/hooks'
+import Link from 'next/link'
 
 export const metadata = {
   title: 'Spacetime',
@@ -18,7 +19,7 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useUser()
+  const { isAuthenticated } = useAuth()
 
   return (
     <html lang="en">
@@ -44,7 +45,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <Profile />
             ) : (
               <a
-                href={GET_GITHUB_CODE_LINK}
+                href={GITHUB_SIGN_IN_URL}
                 className="flex items-center gap-3 text-left"
               >
                 {/* Section Avatar */}
@@ -77,12 +78,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </div>
 
               {/* Section Button */}
-              <a
-                href=""
+              <Link
+                href="/memories/new"
                 className="inline-block rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
               >
                 CADASTRAR LEMBRANÇA
-              </a>
+              </Link>
             </div>
 
             {/* Section Copyright */}
@@ -111,7 +112,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 
 const Profile = () => {
-  const { getUser } = useUser()
+  const { getUser } = useAuth()
 
   const { name, avatarUrl } = getUser()
 

@@ -7,17 +7,18 @@ type UserProps = {
   avatarUrl: string
 }
 
-type useUserProps = {
+type useAuthProps = {
   getUser: () => UserProps
   isAuthenticated: boolean
+  token?: string
 }
 
-const useUser = (): useUserProps => {
+const useAuth = (): useAuthProps => {
   const isAuthenticated = cookies().has('token')
 
-  const getUser = (): UserProps => {
-    const token = cookies().get('token')?.value
+  const token = cookies().get('token')?.value
 
+  const getUser = (): UserProps => {
     if (!token) {
       throw new Error('Unauthenticated.')
     }
@@ -30,7 +31,8 @@ const useUser = (): useUserProps => {
   return {
     getUser,
     isAuthenticated,
+    token,
   }
 }
 
-export { useUser }
+export { useAuth }

@@ -8,10 +8,43 @@ import NLWLogo from './src/common/assets/nlw-spacetime-logo.svg'
 import blurBg from './src/common/assets/bg-blur.png'
 
 import StripesComponent from './src/common/assets/stripes.svg'
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
+import { useEffect } from 'react'
+import { api } from './src/lib'
 const Stripes = styled(StripesComponent)
+
+const discovery = {
+  authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+  tokenEndpoint: 'https://github.com/login/oauth/access_token',
+  revocationEndpoint:
+    'https://github.com/settings/connections/applications/2b22780fe99d4c5896d3',
+}
 
 export default function App() {
   const { hasLoadedFonts, errors } = useFonts()
+
+  const [request, response, signInWithGithub] = useAuthRequest(
+    {
+      clientId: '2b22780fe99d4c5896d3',
+      scopes: ['identity'],
+      redirectUri: makeRedirectUri({
+        scheme: 'nlwspacetime',
+      }),
+    },
+    discovery,
+  )
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { code } = response.params
+
+      api.post('/register', { code }).then((response) => {
+        const { token } = response.data
+
+        console.log({ token })
+      })
+    }
+  }, [response])
 
   if (errors) {
     return <Text>{errors.message}</Text>
@@ -48,6 +81,7 @@ export default function App() {
         <TouchableOpacity
           activeOpacity={0.8}
           className="rounded-full bg-green-500 px-5 py-2"
+          onPress={() => signInWithGithub()}
         >
           <Text className="font-alt text-sm uppercase text-black">
             COMEÇAR A CADASTRAR

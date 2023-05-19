@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar'
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 import { styled } from 'nativewind'
+import * as SecureStore from 'expo-secure-store'
 
 import { useFonts } from './src/hooks'
 
@@ -41,7 +42,7 @@ export default function App() {
       api.post('/register', { code }).then((response) => {
         const { token } = response.data
 
-        console.log({ token })
+        SecureStore.setItemAsync('token', token)
       })
     }
   }, [response])

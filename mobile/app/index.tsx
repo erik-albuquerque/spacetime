@@ -2,16 +2,17 @@ import { StatusBar } from 'expo-status-bar'
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
 import { styled } from 'nativewind'
 import * as SecureStore from 'expo-secure-store'
+import { useRouter } from 'expo-router'
 
-import { useFonts } from './src/hooks'
+import { useFonts } from '../src/hooks'
 
-import NLWLogo from './src/common/assets/nlw-spacetime-logo.svg'
-import blurBg from './src/common/assets/bg-blur.png'
+import NLWLogo from '../src/common/assets/nlw-spacetime-logo.svg'
+import blurBg from '../src/common/assets/bg-blur.png'
 
-import StripesComponent from './src/common/assets/stripes.svg'
+import StripesComponent from '../src/common/assets/stripes.svg'
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import { useEffect } from 'react'
-import { api } from './src/lib'
+import { api } from '../src/lib'
 const Stripes = styled(StripesComponent)
 
 const discovery = {
@@ -22,9 +23,11 @@ const discovery = {
 }
 
 export default function App() {
+  const router = useRouter()
+
   const { hasLoadedFonts, errors } = useFonts()
 
-  const [request, response, signInWithGithub] = useAuthRequest(
+  const [, response, signInWithGithub] = useAuthRequest(
     {
       clientId: '2b22780fe99d4c5896d3',
       scopes: ['identity'],
@@ -35,15 +38,21 @@ export default function App() {
     discovery,
   )
 
+  const handleGithubOAuthCode = async (code: string) => {
+    const response = await api.post('/register', { code })
+
+    const { token } = response.data
+
+    await SecureStore.setItemAsync('token', token)
+
+    router.push('/memories')
+  }
+
   useEffect(() => {
     if (response?.type === 'success') {
       const { code } = response.params
 
-      api.post('/register', { code }).then((response) => {
-        const { token } = response.data
-
-        SecureStore.setItemAsync('token', token)
-      })
+      handleGithubOAuthCode(code)
     }
   }, [response])
 

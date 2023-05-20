@@ -1,3 +1,4 @@
+import { MediaPicker } from '@/components'
 import { Image as IconImage, ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 
@@ -22,7 +23,6 @@ const NewMemories = () => {
               <IconImage className="h-4 w-4" />
               Anexar mídia
             </label>
-            <input type="file" id="media" hidden className="invisible" />
           </div>
 
           <div className="flex flex-row items-center gap-2">
@@ -40,6 +40,8 @@ const NewMemories = () => {
             </label>
           </div>
         </div>
+
+        <MediaPicker />
 
         <textarea
           id="content"

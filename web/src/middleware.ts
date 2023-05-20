@@ -17,8 +17,8 @@ const middleware = (request: NextRequest) => {
   return NextResponse.next()
 }
 
-const config = {
+export const config = {
   matcher: '/memories/:path*',
 }
 
-export { middleware, config }
+export { middleware }

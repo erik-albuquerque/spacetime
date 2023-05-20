@@ -22,12 +22,12 @@ const MediaPicker = () => {
   return (
     <>
       <input
-        id="media"
-        type="file"
-        className="invisible"
-        accept="image/*"
         onChange={onMediaSelected}
-        hidden
+        type="file"
+        name="coverUrl"
+        id="media"
+        accept="image/*"
+        className="invisible h-0 w-0"
       />
 
       {preview && (

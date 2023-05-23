@@ -6,7 +6,7 @@ import { cn } from '@/common/utils'
 
 import { useAuth } from '@/hooks'
 
-import { Profile, EmptyProfile, Logo } from '@/components'
+import { Profile, EmptyProfile, Logo, Copyright } from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -65,19 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </Link>
             </div>
 
-            {/* Section Copyright */}
-
-            <div className="text-sm leading-relaxed text-gray-200 ">
-              Feito com 💜 no NLW da{' '}
-              <a
-                href="https://rocketseat.com.br"
-                target="_blank"
-                className="underline transition-colors hover:text-gray-100"
-                rel="noreferrer"
-              >
-                Rocketseat
-              </a>
-            </div>
+            <Copyright />
           </section>
 
           {/* Section right */}

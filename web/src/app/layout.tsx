@@ -5,7 +5,11 @@ import { ReactNode } from 'react'
 import { roboto, baiJamjuree } from '@/common/fonts'
 import { cn } from '@/common/utils'
 
-import { SideContentLeft } from '@/components'
+import { SideContentLeft, SideContentRight } from '@/components'
+
+type RootLayoutProps = {
+  children: ReactNode
+}
 
 export const metadata = {
   title: 'Spacetime',
@@ -13,7 +17,7 @@ export const metadata = {
     'Uma cápsula do tempo construída com React, Next.js, TailwindCSS e TypeScript',
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body
@@ -27,10 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main className="grid min-h-screen grid-cols-2">
           <SideContentLeft />
 
-          {/* Section right */}
-          <section className="flex max-h-screen flex-col overflow-y-scroll bg-[url(../assets/bg-stars.svg)] bg-cover">
-            {children}
-          </section>
+          <SideContentRight>{children}</SideContentRight>
         </main>
       </body>
     </html>

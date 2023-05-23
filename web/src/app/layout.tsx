@@ -5,13 +5,7 @@ import { cn } from '@/common/utils'
 
 import { useAuth } from '@/hooks'
 
-import {
-  Profile,
-  EmptyProfile,
-  Logo,
-  Copyright,
-  NewMemoryButton,
-} from '@/components'
+import { Profile, EmptyProfile, Hero, Copyright } from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -44,25 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {/* Section Profile - Sign in */}
             {isAuthenticated ? <Profile /> : <EmptyProfile />}
 
-            {/* Section Hero */}
-            <div className="space-y-5">
-              {/* Section Logo */}
-              <Logo />
-
-              {/* Section Content */}
-              <div className="max-w-[420px] space-y-4">
-                <h1 className="text-5xl font-bold leading-tight text-gray-50">
-                  Sua cápsula do tempo
-                </h1>
-
-                <p className="text-lg leading-relaxed">
-                  Colecione momentos marcantes da sua jornada e compartilhe (se
-                  quiser) com o mundo!
-                </p>
-              </div>
-
-              <NewMemoryButton />
-            </div>
+            <Hero />
 
             <Copyright />
           </section>

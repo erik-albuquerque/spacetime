@@ -1,11 +1,20 @@
 import '@/common/styles/globals.css'
+
 import { ReactNode } from 'react'
+
 import { roboto, baiJamjuree } from '@/common/fonts'
 import { cn } from '@/common/utils'
 
 import { useAuth } from '@/hooks'
 
-import { Profile, EmptyProfile, Hero, Copyright, Stripes } from '@/components'
+import {
+  Profile,
+  EmptyProfile,
+  Hero,
+  Copyright,
+  Stripes,
+  Blur,
+} from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -29,8 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main className="grid min-h-screen grid-cols-2">
           {/* Section left */}
           <section className="relative flex flex-col items-start justify-between overflow-hidden border-r border-white/10 bg-[url(../assets/bg-stars.svg)] bg-cover px-28 py-16">
-            {/* Section blur */}
-            <div className="absolute right-0 top-1/2 h-[288px] w-[526px] -translate-y-1/2 translate-x-1/2 rounded-full bg-purple-700 opacity-50 blur-full" />
+            <Blur />
 
             <Stripes />
 

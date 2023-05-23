@@ -1,12 +1,17 @@
 import '@/common/styles/globals.css'
-import Link from 'next/link'
 import { ReactNode } from 'react'
 import { roboto, baiJamjuree } from '@/common/fonts'
 import { cn } from '@/common/utils'
 
 import { useAuth } from '@/hooks'
 
-import { Profile, EmptyProfile, Logo, Copyright } from '@/components'
+import {
+  Profile,
+  EmptyProfile,
+  Logo,
+  Copyright,
+  NewMemoryButton,
+} from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -56,13 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 </p>
               </div>
 
-              {/* Section Button */}
-              <Link
-                href="/memories/new"
-                className="inline-block rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
-              >
-                CADASTRAR LEMBRANÇA
-              </Link>
+              <NewMemoryButton />
             </div>
 
             <Copyright />

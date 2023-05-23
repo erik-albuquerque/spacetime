@@ -1,6 +1,6 @@
 'use client'
 
-import { MediaPicker } from '@/components'
+import { MediaPicker } from '@/components/MediaPicker'
 import { api } from '@/lib'
 import { Image as IconImage } from 'lucide-react'
 import { FormEvent } from 'react'

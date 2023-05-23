@@ -7,6 +7,8 @@ import { useAuth } from '@/hooks'
 import { api } from '@/lib'
 import { ArrowRight } from 'lucide-react'
 
+import { EmptyMemories } from '@/components'
+
 dayjs.locale(ptBR)
 
 type Memory = {
@@ -20,17 +22,7 @@ const Home = async () => {
   const { isAuthenticated, token } = useAuth()
 
   if (!isAuthenticated) {
-    return (
-      <div className="flex flex-1 items-center justify-center p-16">
-        <p className="w-[360px] text-center leading-relaxed">
-          Você ainda não registrou nenhuma lembrança, comece a{' '}
-          <a href="" className="underline transition-colors hover:text-gray-50">
-            criar agora
-          </a>
-          !
-        </p>
-      </div>
-    )
+    return <EmptyMemories />
   }
 
   const response = await api.get('/memories', {
@@ -42,17 +34,7 @@ const Home = async () => {
   const memories: Memory[] = response.data.memories
 
   if (memories.length === 0) {
-    return (
-      <div className="flex flex-1 items-center justify-center p-16">
-        <p className="w-[360px] text-center leading-relaxed">
-          Você ainda não registrou nenhuma lembrança, comece a{' '}
-          <a href="" className="underline transition-colors hover:text-gray-50">
-            criar agora
-          </a>
-          !
-        </p>
-      </div>
-    )
+    return <EmptyMemories />
   }
 
   return (

@@ -5,16 +5,7 @@ import { ReactNode } from 'react'
 import { roboto, baiJamjuree } from '@/common/fonts'
 import { cn } from '@/common/utils'
 
-import { useAuth } from '@/hooks'
-
-import {
-  Profile,
-  EmptyProfile,
-  Hero,
-  Copyright,
-  Stripes,
-  Blur,
-} from '@/components'
+import { SideContentLeft } from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -23,8 +14,6 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const { isAuthenticated } = useAuth()
-
   return (
     <html lang="en">
       <body
@@ -36,18 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         )}
       >
         <main className="grid min-h-screen grid-cols-2">
-          {/* Section left */}
-          <section className="relative flex flex-col items-start justify-between overflow-hidden border-r border-white/10 bg-[url(../assets/bg-stars.svg)] bg-cover px-28 py-16">
-            <Blur />
-
-            <Stripes />
-
-            {isAuthenticated ? <Profile /> : <EmptyProfile />}
-
-            <Hero />
-
-            <Copyright />
-          </section>
+          <SideContentLeft />
 
           {/* Section right */}
           <section className="flex max-h-screen flex-col overflow-y-scroll bg-[url(../assets/bg-stars.svg)] bg-cover">

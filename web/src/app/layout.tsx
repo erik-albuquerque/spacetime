@@ -5,7 +5,7 @@ import { cn } from '@/common/utils'
 
 import { useAuth } from '@/hooks'
 
-import { Profile, EmptyProfile, Hero, Copyright } from '@/components'
+import { Profile, EmptyProfile, Hero, Copyright, Stripes } from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -32,10 +32,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {/* Section blur */}
             <div className="absolute right-0 top-1/2 h-[288px] w-[526px] -translate-y-1/2 translate-x-1/2 rounded-full bg-purple-700 opacity-50 blur-full" />
 
-            {/* Section Stripes */}
-            <div className="absolute bottom-0 right-2 top-0 w-2 bg-stripes" />
+            <Stripes />
 
-            {/* Section Profile - Sign in */}
             {isAuthenticated ? <Profile /> : <EmptyProfile />}
 
             <Hero />

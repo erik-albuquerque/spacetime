@@ -1,15 +1,12 @@
 import '@/common/styles/globals.css'
 import Link from 'next/link'
-import Image from 'next/image'
 import { ReactNode } from 'react'
 import { roboto, baiJamjuree } from '@/common/fonts'
 import { cn } from '@/common/utils'
 
 import { useAuth } from '@/hooks'
 
-import { Profile, EmptyProfile } from '@/components'
-
-import nlwSpacetimeLogo from '@/common/assets/nlw-spacetime-logo.svg'
+import { Profile, EmptyProfile, Logo } from '@/components'
 
 export const metadata = {
   title: 'Spacetime',
@@ -45,7 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             {/* Section Hero */}
             <div className="space-y-5">
               {/* Section Logo */}
-              <Image src={nlwSpacetimeLogo} alt="NLW Spacetime" />
+              <Logo />
 
               {/* Section Content */}
               <div className="max-w-[420px] space-y-4">
